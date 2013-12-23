@@ -1,86 +1,82 @@
-gulp-header
-===========
-
-[![Build Status](https://travis-ci.org/godaddy/gulp-header.png)](https://travis-ci.org/godaddy/gulp-header)
+# gulp-header [![NPM version](https://badge.fury.io/js/gulp-header.png)](http://badge.fury.io/js/gulp-header) [![Build Status](https://travis-ci.org/godaddy/gulp-header.png)](https://travis-ci.org/godaddy/gulp-header)
 
 Gulp extension to add a header to file(s) in the pipeline
 
-    var header = require('gulp-header');
+```javascript
+var header = require('gulp-header');
+```
 
-Structure
----------
+## Usage
 
-* `header` = function([headerText], [options])
-  * `headerText` string optional
-    * The text to use for the header to be prepended to the files in the stream.
-    * Will be formatted against the mustache processor, and passed an options object with the following fields added
-      * `filename` - the name of the file being added
-      * `now` - ISO-8601 formatted datetime
-      * `year` - the current year
-  * `options` object optional
-    * `file` string optional
-      * a file to use for the headerText, if headerText isn't specified
-    * other parameters will be passed through to the mustache processor against `headerText`
+```javascript
+var header = require('gulp-header');
 
-Example
--------
-    var header = require('gulp-header');
-    var gc = require('gulp-concat');
-    //header = function([headerText], [options]);
-    
-    ...headerText from string...
-    var headerText = '' +
-        '/*! {{filename}} - '+
-        'Copyright {{year}} MyCompany - '+
-        'MIT License - '+
-        'generated {{now}} - {{foo}} */'+
-        '';
-    gulp.src('./lib/*.js')
-        .pipe(gc('merged.js'))
-        .pipe(header(headerText, {foo:'bar'}))
-        .pipe(gulp.dest('./dist/')
-    
-    ...options - headerText from file...
-    gulp.src('./lib/*.js')
-        .pipe(gc('merged.js'))
-        .pipe(header({
-            file:__dirname + '/text/header.txt'
-            ,foo:'bar'
-        }))
-        .pipe(gulp.dest('./dist/')
+gulp.src('./foo/*.js')
+  .pipe(header('Hello'))
+  .pipe(gulp.dest('./dist/')
 
-Testing
--------
+gulp.src('./foo/*.js')
+  .pipe(header('Hello <%= name %>\n', { name : 'World'} ))
+  .pipe(gulp.dest('./dist/')
 
-Unit Tests
-
-    npm test
-
-Code Coverage
-
-    npm run-script coverage
+gulp.src('./foo/*.js')
+  .pipe(header('Hello ${name}\n', { name : 'World'} ))
+  .pipe(gulp.dest('./dist/')
 
 
-License
--------
+//
 
-    The MIT License (MIT)
 
-    Copyright (c) 2013 GoDaddy.com
+var pkg = require('./package.json');
+var banner = ['/**',
+  ' * <%= pkg.name %> - <%= pkg.description %>',
+  ' * @version v<%= pkg.version %>',
+  ' * @link <%= pkg.homepage %>',
+  ' * @license <%= pkg.license %>',
+  ' */',
+  ''].join('\n');
 
-    Permission is hereby granted, free of charge, to any person obtaining a copy of
-    this software and associated documentation files (the "Software"), to deal in
-    the Software without restriction, including without limitation the rights to
-    use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-    the Software, and to permit persons to whom the Software is furnished to do so,
-    subject to the following conditions:
+gulp.src('./foo/*.js')
+  .pipe(header(banner, { pkg : pkg } ))
+  .pipe(gulp.dest('./dist/')
 
-    The above copyright notice and this permission notice shall be included in all
-    copies or substantial portions of the Software.
+gulp.src('./foo/*.js')
+  .pipe(header.fromFile('banner.js', { pkg : pkg } ))
+  .pipe(gulp.dest('./dist/')
+```
 
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-    FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-    COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-    IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+## API
+
+### header(text, data)
+
+#### text
+
+Type: `String`  
+Default: `''`  
+
+The template text.
+
+
+#### data
+
+Type: `Object`  
+Default: `{}`  
+
+The data object used to populate the text.
+
+
+### header.fromFile(filePath, data)
+
+#### filePath
+
+Type: `String`  
+
+The path of the template file.
+
+
+#### data
+
+Type: `Object`  
+Default: `{}`  
+
+The data object used to populate the text.
