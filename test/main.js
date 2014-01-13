@@ -106,49 +106,4 @@ describe('gulp-header', function() {
 
   });
 
-
-  describe('header.fromFile()', function() {
-
-    it('should throw invalid filepath error', function() {
-      (function(){
-        header.fromFile();
-      }).should.throw('Invalid filepath');
-    });
-
-    it('should throw invalid filepath error', function() {
-      (function(){
-        header.fromFile('haters gonna hate');
-      }).should.throwError(/^ENOENT/);
-    });
-
-    it('should use a file content as header', function(done) {
-      var file_count = 0;
-      var stream = header.fromFile('./test/sample', { authors : ['foo', 'bar']});
-      stream.on('data', function(newFile){
-        should.exist(newFile);
-        should.exist(newFile.path);
-        should.exist(newFile.relative);
-        should.exist(newFile.contents);
-        newFile.path.should.equal('./test/fixture/file.js');
-        newFile.relative.should.equal('file.js');
-        newFile.contents.toString().should.equal([
-          '//',
-          '// file.js',
-          '// Created by foo,bar',
-          '//',
-          'Hello world'
-          ].join('\n'));
-        ++file_count;
-      });
-
-      stream.once('end', function () {
-        file_count.should.equal(1);
-        done();
-      });
-
-      stream.write(fakeFile);
-      stream.end();
-    });
-
-  });
 });
