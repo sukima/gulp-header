@@ -39,7 +39,16 @@ var banner = ['/**',
 gulp.src('./foo/*.js')
   .pipe(header(banner, { pkg : pkg } ))
   .pipe(gulp.dest('./dist/')
+  
 
+//
+
+
+var fs = require('fs');
+
+gulp.src('./foo/*.js')
+  .pipe(header(fs.readFileSync('header.txt', 'utf8'), { pkg : pkg } ))
+  .pipe(gulp.dest('./dist/')
 ```
 
 ## API
