@@ -21,14 +21,14 @@
     "eventstream"
   ],
   "author": {
-    "name": "Michael J. Ryan",
-    "url": "http://tracker1.info/"
+      "name": "Michael J. Ryan",
+      "email": "mxryan@godaddy.com",
+      "url": "http://github.com/tracker1"
   },
   "contributors": [
     {
-      "name": "Michael J. Ryan",
-      "email": "tracker1@gmail.com",
-      "url": "http://tracker1.info/"
+      "name": "GoDaddy.com",
+      "url": "http://github.com/godaddy"
     },
     {
       "name": "Douglas Duteil",
