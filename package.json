@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/godaddy/gulp-header.git"
+    "url": "git://github.com/tracker1/gulp-header.git"
   },
   "keywords": [
     "header",
@@ -21,14 +21,14 @@
     "eventstream"
   ],
   "author": {
-    "name": "GoDaddy.com",
-    "url": "http://github.com/godaddy"
+    "name": "Michael J. Ryan",
+    "url": "http://tracker1.info/"
   },
   "contributors": [
     {
       "name": "Michael J. Ryan",
-      "email": "mxryan@godaddy.com",
-      "url": "http://github.com/tracker1"
+      "email": "tracker1@gmail.com",
+      "url": "http://tracker1.info/"
     },
     {
       "name": "Douglas Duteil",
@@ -38,7 +38,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/godaddy/gulp-header/issues"
+    "url": "https://github.com/tracker1/gulp-header/issues"
   },
   "dependencies": {
     "event-stream": "*",
