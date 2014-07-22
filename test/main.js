@@ -5,6 +5,8 @@
 var header = require('../');
 var should = require('should');
 var gutil = require('gulp-util');
+var fs = require('fs');
+var path = require('path');
 require('mocha');
 
 describe('gulp-header', function() {
@@ -16,6 +18,15 @@ describe('gulp-header', function() {
       cwd: './test/',
       base: './test/fixture/',
       contents: new Buffer(fileContent || '')
+    });
+  }
+
+  function getFakeFileReadStream(){
+    return new gutil.File({
+      path: './test/fixture/file.js',
+      cwd: './test/',
+      base: './test/fixture/',
+      contents: fs.createReadStream(path.join(__dirname, './fixture/file.js'))
     });
   }
 
@@ -61,6 +72,18 @@ describe('gulp-header', function() {
       stream.end();
     });
 
+
+    it('should prepend the header to the file content (stream)', function(done) {
+      var stream = header('And then i said : ');
+      stream.on('data', function (newFile) {
+        should.exist(newFile.contents);
+        newFile.contents.toString().should.equal('And then i said : Hello world');
+      });
+      stream.once('end', done);
+
+      stream.write(getFakeFileReadStream());
+      stream.end();
+    });
 
     it('should format the header', function(done) {
       var stream = header('And then <%= foo %> said : ', { foo : 'you' } );
