@@ -43,10 +43,12 @@
   "dependencies": {
     "event-stream": "*",
     "gulp-util": "*",
-    "lodash.assign": "*"
+    "lodash.assign": "*",
+    "through2": "*"
   },
   "devDependencies": {
     "mocha": "*",
-    "should": "*"
+    "should": "*",
+    "vinyl": "*"
   }
 }
